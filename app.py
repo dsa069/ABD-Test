@@ -25,9 +25,9 @@ def start_quiz():
     random.shuffle(all_question_indices)
     
     # Select questions based on mode
-    if mode == '40':
-        # Take only 40 questions or all if less than 40
-        selected_indices = all_question_indices[:min(40, len(questions))]
+    if mode == '10':
+        # Take only 10 questions or all if less than 10
+        selected_indices = all_question_indices[:min(10, len(questions))]
         session['mode'] = 'Simulacro de Examen'
     else:
         selected_indices = all_question_indices
@@ -91,27 +91,43 @@ def get_question():
     question_index = session['question_indices'][current_idx]
     question_data = questions[question_index]
     
-    # Rest of the function remains the same - randomize options, etc.
-    # But store the index of the correct answer for this specific question
+    # Check if this is a multiple choice question
+    is_multiple = question_data.get("type") == "multiple"
+    
     options = question_data["options"].copy()
-    correct_index = question_data["correct"]
+    correct_answer = question_data["correct"]
     
-    # Create a list of pairs (option, is_correct)
-    option_pairs = [(options[i], i == correct_index) for i in range(len(options))]
-    random.shuffle(option_pairs)
+    # Handle different types of correct answers (single integer or list)
+    if isinstance(correct_answer, list):  # Multiple choice
+        # Create a list of pairs (option, is_correct)
+        option_pairs = [(options[i], i in correct_answer) for i in range(len(options))]
+        random.shuffle(option_pairs)
+        
+        # Unpack the shuffled pairs
+        shuffled_options = [pair[0] for pair in option_pairs]
+        new_correct_indices = [i for i, pair in enumerate(option_pairs) if pair[1]]
+        
+        # Store the new correct indices in the session
+        session[f'correct_idx_{current_idx}'] = new_correct_indices
+    else:  # Single choice
+        # Create a list of pairs (option, is_correct)
+        option_pairs = [(options[i], i == correct_answer) for i in range(len(options))]
+        random.shuffle(option_pairs)
+        
+        # Unpack the shuffled pairs
+        shuffled_options = [pair[0] for pair in option_pairs]
+        new_correct_index = next(i for i, pair in enumerate(option_pairs) if pair[1])
+        
+        # Store the new correct index in the session
+        session[f'correct_idx_{current_idx}'] = new_correct_index
     
-    # Unpack the shuffled pairs
-    shuffled_options = [pair[0] for pair in option_pairs]
-    new_correct_index = next(i for i, pair in enumerate(option_pairs) if pair[1])
-    
-    # Store the new correct index in the session
-    session[f'correct_idx_{current_idx}'] = new_correct_index
     session.modified = True
     
     # Send response data
     response_data = {
         "question": question_data["question"],
-        "options": shuffled_options
+        "options": shuffled_options,
+        "isMultiple": is_multiple
     }
     
     return jsonify(response_data)
@@ -123,13 +139,19 @@ def check_answer():
         return jsonify({"error": "Quiz not initialized"}), 400
     
     data = request.get_json()
-    selected_option = data.get('selected')
+    selected_option = data.get('selected')  # Puede ser un único índice o una lista de índices
     current_idx = session['current_question']
     
     # Get the correct answer from the session
     correct_option = session.get(f'correct_idx_{current_idx}')
     
-    is_correct = selected_option == correct_option
+    # Comprobamos si es una respuesta múltiple o simple
+    if isinstance(selected_option, list):
+        # Para respuestas múltiples, debe acertar todas las opciones correctas
+        is_correct = set(selected_option) == set(correct_option)
+    else:
+        # Para respuestas simples
+        is_correct = selected_option == correct_option
     
     if is_correct:
         session['correct_answers'] += 1

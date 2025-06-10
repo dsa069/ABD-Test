@@ -228,3 +228,44 @@ h1 {
         margin-bottom: 0.5rem;
     }
 }
+
+/* Estilos para preguntas de selección múltiple */
+.multiple-choice-indicator {
+    font-style: italic;
+    color: #666;
+    margin-top: 5px;
+    font-size: 0.9rem;
+}
+
+.option-checkbox {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.option-checkbox:hover {
+    background-color: #e9ecef;
+}
+
+.option-checkbox input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.option-checkbox.option-correct {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
+}
+
+.option-checkbox.option-incorrect {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
+}
