@@ -22,7 +22,7 @@ questions = [
         {
         "question": "En la siguiente sentencia creamos la tabla DEPARTAMENTOS:\nCREATE TABLE departamentos (Id NUMBER(4), Nombre VARCHAR2(30), Responsable_id NUMBER(4)) STORAGE (INITIAL 200K NEXT 200K PCTINCREASE 50 MINEXTENTS 1 MAXEXTENTS 7) TABLESPACE data;\n¿Cuál es el tamaño definido para la quinta extensión?",
         "options": ["300K", "450K", "675K", "Ninguna de las anteriores es correcta"],
-        "correct": 1
+        "correct": 2
     },
     {
         "question": "Tenemos este conjunto de tablas, con las claves primarias subrayadas:\nAlumno ([NIF], Nombre, Fecha_nacimiento, Titulación)\nNota([NIF], [Codigo],[Fecha], Calificación)\nAsignatura([Codigo], Nombre, Créditos)\nTitulación([Titulación], Centro, Año_implantación)\nAplicando ingeniería inversa para obtener el esquema conceptual, podemos decir que",
