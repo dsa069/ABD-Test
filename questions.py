@@ -414,9 +414,9 @@ questions = [
     },
     {
         "question": "Supongamos un tamaño de bloque de datos de 4K. ¿Sería correcto planificar un espacio de tablas (tablespace) de 100K, suponiendo que se tienen extensiones de 3 bloques de datos, segmentos de 3 extensiones, y archivos de datos de 3 segmentos? (Esta pregunta es de respuesta libre)",
-        "options": ["No, porque el tamaño necesario sería: 3 segmentos × 3 extensiones × 3 bloques × 4K = 108K", 
+        "options": ["No, porque el tamaño necesario serían mis huevos con bigote", 
                    "Sí, porque el tamaño necesario sería: 3 segmentos × 3 extensiones × 3 bloques × 4K / 3.6 = 100K", 
-                   "No, porque el espacio necesario debe ser de al menos 108K para este diseño", 
+                   "No, porque el espacio necesario debe ser de al menos 108K para este diseño (3 segmentos × 3 extensiones × 3 bloques × 4K)", 
                    "Sí, porque un tablespace de 100K puede almacenar 25 bloques, lo que es suficiente para 24 bloques necesarios"],
         "correct": 2 #CHATGPT
     }
