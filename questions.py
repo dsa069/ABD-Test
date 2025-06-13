@@ -366,7 +366,7 @@ questions = [
                    "A, B y C son los atributos principales y la relación está en FNBC", 
                    "A, B, C, D y E son los atributos principales y la relación está en 3FN", 
                    "A, B, C, D y E son los atributos principales y la relación está en FNBC"],
-        "correct": 3
+        "correct": 0
     },
     {
         "question": "En el proceso de establecer una conexión de usuario con un servidor dedicado (no compartido) en Oracle, ¿cuál/es de las siguientes afirmaciones son ciertas?",
